@@ -66,7 +66,7 @@ function updateenv() {
         REQUIREMENTS=requirements.txt
     fi
     SYS_ARCH=$(uname -m)
-    if [ ${SYS_ARCH} -eq 'armv7l' ]; then
+    if [ "${SYS_ARCH}" -eq "armv7l" ]; then
         echo "Detected Raspberry, installing cyhon."
         ${PYTHON} -m pip install --upgrade cython
     fi
