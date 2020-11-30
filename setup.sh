@@ -61,13 +61,25 @@ function updateenv() {
     read -p "Do you want to install dependencies for dev [y/N]? "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        ${PYTHON} -m pip install --upgrade -r requirements-dev.txt
+        REQUIREMENTS=requirements-dev.txt
     else
-        ${PYTHON} -m pip install --upgrade -r requirements.txt
-        echo "Dev dependencies ignored."
+        REQUIREMENTS=requirements.txt
     fi
-
+    SYS_ARCH=$(uname -m)
+    if [ ${SYS_ARCH} -eq 'armv7l' ]; then
+        echo "Detected Raspberry, installing cyhon."
+        ${PYTHON} -m pip install --upgrade cython
+    fi
+    ${PYTHON} -m pip install --upgrade -r ${REQUIREMENTS}
+    if [ $? -ne 0 ]; then
+        echo "Failed installing dependencies"
+        exit 1
+    fi
     ${PYTHON} -m pip install -e .
+    if [ $? -ne 0 ]; then
+        echo "Failed installing Freqtrade"
+        exit 1
+    fi
     echo "pip install completed"
     echo
 }
