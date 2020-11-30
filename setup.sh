@@ -66,8 +66,8 @@ function updateenv() {
         REQUIREMENTS=requirements.txt
     fi
     SYS_ARCH=$(uname -m)
-    if [ "${SYS_ARCH}" -eq "armv7l" ]; then
-        echo "Detected Raspberry, installing cyhon."
+    if [ "${SYS_ARCH}" == "armv7l" ]; then
+        echo "Detected Raspberry, installing cython."
         ${PYTHON} -m pip install --upgrade cython
     fi
     ${PYTHON} -m pip install --upgrade -r ${REQUIREMENTS}
@@ -146,11 +146,11 @@ function reset() {
 
             git fetch -a
 
-            if [ "1" == $(git branch -vv |grep -c "* develop") ]
+            if [ "1" == $(git branch -vv | grep -c "* develop") ]
             then
                 echo "- Hard resetting of 'develop' branch."
                 git reset --hard origin/develop
-            elif [ "1" == $(git branch -vv |grep -c "* stable") ]
+            elif [ "1" == $(git branch -vv | grep -c "* stable") ]
             then
                 echo "- Hard resetting of 'stable' branch."
                 git reset --hard origin/stable
@@ -161,7 +161,7 @@ function reset() {
     fi
 
     if [ -d ".env" ]; then
-        echo "- Delete your previous virtual env"
+        echo "- Deleting your previous virtual env"
         rm -rf .env
     fi
     echo
@@ -265,7 +265,7 @@ function install() {
     echo "Run the bot !"
     echo "-------------------------"
     echo "You can now use the bot by executing 'source .env/bin/activate; freqtrade <subcommand>'."
-    echo "You can see the list of available bot subcommands by executing 'source .env/bin/activate; freqtrade --help'."
+    echo "You can see the list of available bot sub-commands by executing 'source .env/bin/activate; freqtrade --help'."
     echo "You verify that freqtrade is installed successfully by running 'source .env/bin/activate; freqtrade --version'."
 }
 
